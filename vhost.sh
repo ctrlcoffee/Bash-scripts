@@ -23,7 +23,7 @@ if [ -z "$new_docroot" ]; then
 fi
 
 
-
+#take note to fix the prefix slash for new_docroot ~!!!!!!
 new_config_file="${new_docroot//\//-}.conf"
 #default_conf="${000-default//\//}.conf"
 cp 000-default.conf "$new_config_file"
