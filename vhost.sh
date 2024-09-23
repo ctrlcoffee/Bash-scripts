@@ -15,6 +15,7 @@ if [[ $? -ne 0 ]];then
 fi
 
 
+
 read -p "Enter the new Document Root path (/var/www/html/path)" new_docroot
 if [ -z "$new_docroot" ]; then
     echo "No Document Root entered. Exiting."
@@ -26,7 +27,7 @@ fi
 new_config_file="${new_docroot//\//-}.conf"
 #default_conf="${000-default//\//}.conf"
 cp 000-default.conf "$new_config_file"
-
+echo "configuration file copied successfully..."
 
 if [[ $? -ne 0 ]]; then 
     echo "Failed to create new config file ."
@@ -43,7 +44,7 @@ if [[ $? -ne 0 ]]; then
     echo "Failed to update DocumentRoot in $new_config_file"
     exit 1
 fi
-
+echo "DocumentRoot directive edited successfully..."
 
 
 
@@ -61,8 +62,10 @@ echo "Adding $server_name to $new_config_file"
 
 sed -i "13i\\\tServerName $server_name" "$new_config_file"
 
+echo "ServerName directive added successfully..."
 
 
+  
 echo "192.168.1.5 $server_name" | tee -a /etc/hosts > /dev/null
 if [[ $? -ne 0 ]]; then 
     echo "Failed to add $server_name to /etc/hosts."
@@ -74,6 +77,9 @@ if [[ $? -ne 0 ]]; then
     echo "Failed to cd to /var/www/html"
     exit 1
 fi
+
+echo "virtual domain added to /etc/hosts successfully..."
+
 mkdir "$new_docroot"
 a2ensite "$new_config_file" &> /dev/null
 
