@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#note that the apache service must be enabled to run this script!
 
 if [[ $EUID -ne 0 ]]; then
     echo "you must be root user to run this script."
@@ -35,10 +35,6 @@ fi
 echo "new config file created: $new_config_file ."
 
 
-
-
-
-
 #edit Document Root directive
 sed -i "s|DocumentRoot .*|DocumentRoot var/www/html/$new_docroot|g" "$new_config_file"
 
@@ -64,9 +60,6 @@ ls -l "$new_config_file"
 echo "Adding $server_name to $new_config_file"
 
 sed -i "13i\\\tServerName $server_name" "$new_config_file"
-
-#echo -e "\tServerName $server_name" | tee -a "$new_config_file"
-#sed -i "/<VirtualHost \*:80>/a \\\tServerName $server_name" "new_config_file"
 
 
 
